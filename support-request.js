@@ -18,7 +18,7 @@ No external services are called in this sample.
 (function () {
   'use strict';
 
-  function esc(s) { return String(s || '').replace(/[&<>"];"'/g, function (m) { return ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'})[m]; }); }
+  function esc(s) { return String(s || '').replace(/[&<>"']/g, function (m) { return ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'})[m]; }); }
 
   var containers = document.querySelectorAll('.ppc-support-request');
   if (!containers || containers.length === 0) return;
@@ -57,7 +57,7 @@ No external services are called in this sample.
       }
 
       // Build a small narrative to display back to the user
-      var narrative = 'Request for ' + business + ' from ' + name + ': "' + request + '"';
+      var narrative = 'Request for ' + business + ' from ' + name + ': "' + request + '\"';
 
       // In this sample we do not call any external APIs.
       // Simulate a small delay like a network call.
