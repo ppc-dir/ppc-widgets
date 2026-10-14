@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Request 2 Book | Private Practice Center</title>
+  <style>
+    :root {
+      --bg: #0F172A;
+      --card-bg: #1E293B;
+      --accent: #0EA5E9;
+      --text: #F8FAFC;
+      --muted: #94A3B8;
+      --border: #334155;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
+    body { background-color: var(--bg); color: var(--text); display: flex; justify-content: center; align-items: center; min-height: 100vh; padding: 1.5rem; }
+    .card { background: var(--card-bg); border: 1px solid var(--border); border-radius: 1rem; width: 100%; max-width: 440px; padding: 2rem; box-shadow: 0 20px 25px -5px rgba(0,0,0,0.5); }
+    .header { text-align: center; margin-bottom: 1.5rem; }
+    .header h1 { font-size: 1.5rem; font-weight: 700; color: var(--text); }
+    .header p { font-size: 0.875rem; color: var(--muted); margin-top: 0.25rem; }
+    .badge { display: inline-block; background: rgba(14, 165, 233, 0.15); color: var(--accent); padding: 0.25rem 0.75rem; border-radius: 9999px; font-size: 0.75rem; font-weight: 600; margin-bottom: 0.75rem; }
+    .form-group { margin-bottom: 1.25rem; }
+    label { display: block; font-size: 0.875rem; font-weight: 500; margin-bottom: 0.5rem; color: var(--text); }
+    input, textarea, select { width: 100%; padding: 0.75rem; background: #0F172A; border: 1px solid var(--border); border-radius: 0.5rem; color: var(--text); font-size: 0.95rem; }
+    input:focus, textarea:focus, select:focus { outline: none; border-color: var(--accent); }
+    button { width: 100%; padding: 0.875rem; background: var(--accent); color: #FFF; font-weight: 600; border: none; border-radius: 0.5rem; cursor: pointer; font-size: 1rem; transition: opacity 0.2s; }
+    button:disabled { opacity: 0.5; cursor: not-allowed; }
+    .footer-note { font-size: 0.75rem; color: var(--muted); text-align: center; margin-top: 1rem; }
+    #status { margin-top: 1rem; text-align: center; font-size: 0.875rem; }
+  </style>
+</head>
+<body>
+
+  <div class="card">
+    <div class="header">
+      <span class="badge">24-Hour Express Hold</span>
+      <h1>Request to Book</h1>
+      <p>Submit your preferred time slot for provider review.</p>
+    </div>
+
+    <form id="bookingForm">
+      <div class="form-group">
+        <label for="fullName">Full Name</label>
+        <input type="text" id="fullName" placeholder="Jane Doe" required>
+      </div>
+
+      <div class="form-group">
+        <label for="phone">Cell Phone Number</label>
+        <input type="tel" id="phone" placeholder="(555) 000-0000" required>
+      </div>
+
+      <div class="form-group">
+        <label for="preferredTime">Preferred Date & Time Window</label>
+        <input type="text" id="preferredTime" placeholder="e.g. Tomorrow Afternoon (2pm-5pm)" required>
+      </div>
+
+      <div class="form-group">
+        <label for="visitType">Visit Type</label>
+        <select id="visitType" required>
+          <option value="Consultation">Initial Consultation</option>
+          <option value="Follow-Up / Refill">Follow-Up / Refill (eVisit)</option>
+          <option value="Urgent Check-In">Urgent Check-In</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label for="notes">Brief Notes for Provider</label>
+        <textarea id="notes" rows="3" placeholder="Describe the purpose of your booking request..."></textarea>
+      </div>
+
+      <button type="submit" id="submitBtn">Submit Booking Request</button>
+      <div id="status"></div>
+    </form>
+
+    <div class="footer-note">
+      Submitted requests are reviewed within 24 hours. You will receive an SMS confirmation once confirmed.
+    </div>
+  </div>
+
+  <script>
+    const form = document.getElementById('bookingForm');
+    const statusDiv = document.getElementById('status');
+    const submitBtn = document.getElementById('submitBtn');
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      submitBtn.disabled = true;
+      statusDiv.style.color = '#0EA5E9';
+      statusDiv.textContent = 'Sending request...';
+
+      const payload = {
+        resource_type: 'request2book',
+        category: 'Booking Request',
+        full_name: document.getElementById('fullName').value,
+        phone_number: document.getElementById('phone').value,
+        preferred_time: document.getElementById('preferredTime').value,
+        visit_type: document.getElementById('visitType').value,
+        notes: document.getElementById('notes').value,
+        timestamp: new Date().toISOString()
+      };
+
+      try {
+        const response = await fetch('https://[YOUR-SUPABASE-PROJECT-REF].supabase.co/functions/v1/notify-encounter', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload)
+        });
+
+        if (response.ok) {
+          statusDiv.style.color = '#22C55E';
+          statusDiv.textContent = 'Request submitted! Your provider will review it shortly.';
+          form.reset();
+        } else {
+          throw new Error('Server returned an error');
+        }
+      } catch (err) {
+        statusDiv.style.color = '#EF4444';
+        statusDiv.textContent = 'Failed to submit. Please try again or contact reception.';
+        submitBtn.disabled = false;
+      }
+    });
+  </script>
+</body>
+</html>
