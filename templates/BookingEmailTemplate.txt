@@ -1,0 +1,25 @@
+Booking Notification
+
+Hello {{client_name}},
+
+This is a confirmation / resend of your booking with {{company_name}}. Please review the details below and use the Office Use Only actions at the bottom of this email if required.
+
+Date: {{booking_date}}
+Time: {{booking_time}}
+Location: {{location}}
+Provider: {{provider_name}}
+
+View Booking: {{action_urls.view}}
+
+Notes:
+{{booking_notes}}
+
+If you need to make changes, please reply to this email or contact us at {{contact_email}}.
+
+Office Use Only
+[ Accept ] {{action_urls.accept}}
+[ Decline ] {{action_urls.decline}}
+[ Reply ] {{action_urls.reply_or_mailto}}
+
+{{company_name}} • {{company_address}}
+If you did not expect this email, please contact us at {{contact_email}}.
