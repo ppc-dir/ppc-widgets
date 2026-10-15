@@ -1,0 +1,115 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>Booking Confirmation</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    body { margin:0; padding:0; -webkit-text-size-adjust:100%; -ms-text-size-adjust:100%; }
+    table { border-collapse:collapse; mso-table-lspace:0pt; mso-table-rspace:0pt; }
+    img { border:0; -ms-interpolation-mode:bicubic; display:block; }
+    a { color:inherit; text-decoration:none; }
+    .playfair { font-family: 'Playfair Display', Georgia, 'Times New Roman', serif; }
+    .serif-fallback { font-family: Georgia, 'Times New Roman', serif; }
+  </style>
+</head>
+<body style="background-color:#F4F1EA; margin:0; padding:20px;">
+  <center style="width:100%; background-color:#F4F1EA;">
+    <table width="100%" cellpadding="0" cellspacing="0" role="presentation">
+      <tr>
+        <td align="center">
+          <table width="600" cellpadding="0" cellspacing="0" role="presentation" style="max-width:600px; background-color:#ffffff; border-radius:8px; overflow:hidden;">
+            <tr>
+              <td style="background-color:#F4F1EA; padding:28px 32px 18px; text-align:center;">
+                <h1 class="playfair" style="margin:0; font-size:28px; line-height:34px; color:#222222; font-weight:700;">{{company_name}}</h1>
+                <p style="margin:6px 0 0; font-size:14px; color:#555555;">Booking Notification</p>
+              </td>
+            </tr>
+
+            <tr>
+              <td style="padding:22px 32px 18px; color:#333333; font-size:16px; line-height:24px;">
+                <p style="margin:0 0 12px;" class="serif-fallback">Hello <strong>{{client_name}}</strong>,</p>
+                <p style="margin:0 0 12px;">This is a confirmation / resend of your booking with <strong>{{company_name}}</strong>. Please review the details below and use the Office Use Only actions at the bottom of this email if required.</p>
+
+                <table width="100%" cellpadding="0" cellspacing="0" role="presentation" style="margin-top:12px; background-color:#FBF9F6; border-radius:6px; padding:12px;">
+                  <tr>
+                    <td style="padding:10px; font-size:15px; color:#222222;">
+                      <strong>Date:</strong> {{booking_date}}<br>
+                      <strong>Time:</strong> {{booking_time}}<br>
+                      <strong>Location:</strong> {{location}}<br>
+                      <strong>Provider:</strong> {{provider_name}}
+                    </td>
+                  </tr>
+                </table>
+              </td>
+            </tr>
+
+            <tr>
+              <td style="padding:18px 32px;">
+                <table cellpadding="0" cellspacing="0" role="presentation" align="left">
+                  <tr>
+                    <td align="center" style="border-radius:6px; background:#C9A96E;">
+                      <a href="{{action_urls.view}}" target="_blank" style="display:inline-block; padding:12px 20px; color:#ffffff; font-weight:600; font-size:15px; text-decoration:none; border-radius:6px; font-family:Helvetica, Arial, sans-serif;">
+                        View Booking
+                      </a>
+                    </td>
+                  </tr>
+                </table>
+              </td>
+            </tr>
+
+            <tr>
+              <td style="padding:0 32px 22px; color:#444444; font-size:14px; line-height:22px;">
+                <p style="margin:0 0 8px;"><strong>Notes:</strong></p>
+                <p style="margin:0 0 8px;">{{booking_notes}}</p>
+                <p style="margin:0;">If you need to make changes, please reply to this email or contact us at {{contact_email}}.</p>
+              </td>
+            </tr>
+
+            <tr>
+              <td style="padding:0 32px;">
+                <hr style="border:none; border-top:1px solid #EFE7DB; margin:0;">
+              </td>
+            </tr>
+
+            <tr>
+              <td style="padding:18px 20px 28px; text-align:center;">
+                <p style="margin:0 0 12px; font-size:12px; color:#777777;">Office Use Only</p>
+
+                <table cellpadding="0" cellspacing="0" role="presentation" align="center" style="margin:0 auto;">
+                  <tr>
+                    <td style="padding:6px 6px;">
+                      <a href="{{action_urls.accept}}" target="_blank" style="background:#C9A96E; color:#ffffff; padding:8px 14px; border-radius:6px; font-weight:600; font-size:14px; display:inline-block; font-family:Helvetica, Arial, sans-serif;">[ Accept ]</a>
+                    </td>
+
+                    <td style="padding:6px 6px;">
+                      <a href="{{action_urls.decline}}" target="_blank" style="background:#ffffff; color:#C9A96E; padding:8px 14px; border-radius:6px; font-weight:600; font-size:14px; display:inline-block; border:2px solid #C9A96E; font-family:Helvetica, Arial, sans-serif;">[ Decline ]</a>
+                    </td>
+
+                    <td style="padding:6px 6px;">
+                      <a href="{{action_urls.reply_or_mailto}}" target="_blank" style="background:#C9A96E; color:#ffffff; padding:8px 14px; border-radius:6px; font-weight:600; font-size:14px; display:inline-block; font-family:Helvetica, Arial, sans-serif;">[ Reply ]</a>
+                    </td>
+                  </tr>
+                </table>
+
+                <p style="margin:12px 0 0; font-size:11px; color:#999999;">Actions are for internal use only. External recipients may ignore these buttons.</p>
+              </td>
+            </tr>
+
+            <tr>
+              <td style="background-color:#F4F1EA; padding:16px 24px; text-align:center; font-size:12px; color:#777777;">
+                <div style="max-width:520px; margin:0 auto;">
+                  <p style="margin:0 0 6px;">{{company_name}} • {{company_address}}</p>
+                  <p style="margin:0;">If you did not expect this email, please contact us at <a href="mailto:{{contact_email}}" style="color:#777777; text-decoration:underline;">{{contact_email}}</a>.</p>
+                </div>
+              </td>
+            </tr>
+
+          </table>
+        </td>
+      </tr>
+    </table>
+  </center>
+</body>
+</html>
